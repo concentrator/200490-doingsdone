@@ -90,7 +90,7 @@ $tasks = [
 
                 <nav class="main-navigation">
                     <ul class="main-navigation__list">
-                        <?php foreach($projects as $key => $project): ?>
+                        <?php foreach($projects as $project): ?>
                         <li class="main-navigation__list-item">
                             <a class="main-navigation__list-item-link" href="#"><?=$project?></a>
                             <span class="main-navigation__list-item-count">0</span>
@@ -130,11 +130,9 @@ $tasks = [
                 </div>
 
                 <table class="tasks">
-                    <?php foreach ($tasks as $key => $task): ?>
-                        <?php if (!$show_complete_tasks && $task['done']):?>
-                            <?php continue; ?>
-                        <?php else: ?>
-                        <tr class="tasks__item task<?php if ($task['done']): ?> task--completed<?php endif; ?>">
+                    <?php foreach ($tasks as $task): ?>
+                        <?php if ($show_complete_tasks || !$task['done']):?>
+                        <tr class="tasks__item task <?=($task['done']) ? 'task--completed' : ''?>">
                             <td class="task__select">
                                 <label class="checkbox task__checkbox">
                                     <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1">
