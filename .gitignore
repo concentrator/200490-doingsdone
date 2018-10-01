@@ -6,5 +6,6 @@
 *.pdf
 *.psd
 *.sublime*
+test.php
 Thumbs.db
 vendor
