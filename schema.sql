@@ -2,24 +2,6 @@ CREATE DATABASE doingsdone CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 USE doingsdone;
 
-CREATE TABLE project (
-  id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-  title VARCHAR(32) UNIQUE NOT NULL,
-  user_id INT NOT NULL
-) CHARACTER SET utf8 COLLATE utf8_general_ci;
-
-CREATE TABLE task (
-  id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-  created DATE NOT NULL,
-  completed DATE,
-  done BOOLEAN DEFAULT 0 NOT NULL,
-  title VARCHAR(255) NOT NULL,
-  file VARCHAR(255) UNIQUE,
-  deadline DATETIME,
-  user_id INT NOT NULL,
-  project_id INT NOT NULL
-) CHARACTER SET utf8 COLLATE utf8_general_ci;
-
 CREATE TABLE user (
   id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
   registred DATE NOT NULL,
@@ -30,6 +12,32 @@ CREATE TABLE user (
   UNIQUE KEY index_email (email)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
 
-CREATE INDEX index_completed ON task(completed);
-CREATE INDEX index_title ON task(title);
-CREATE INDEX index_deadline ON task(deadline);
+CREATE TABLE project (
+  id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  title VARCHAR(32) NOT NULL,
+  user_id INT NOT NULL,
+  UNIQUE KEY index_project (user_id, title),
+  FOREIGN KEY fk_user(user_id)
+  REFERENCES user(id)
+) CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+CREATE TABLE task (
+  id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  created DATE NOT NULL,
+  completed DATE,
+  is_done BOOLEAN DEFAULT 0 NOT NULL,
+  title VARCHAR(255) NOT NULL,
+  file VARCHAR(255) UNIQUE,
+  deadline DATETIME,
+  user_id INT NOT NULL,
+  project_id INT,
+  FOREIGN KEY fk_user(user_id)
+  REFERENCES user(id),
+  FOREIGN KEY fk_project(project_id)
+  REFERENCES project(id)
+) CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+
+CREATE INDEX index_completed ON task(completed, user_id);
+CREATE INDEX index_title ON task(title, user_id);
+CREATE INDEX index_deadline ON task(deadline, user_id);
