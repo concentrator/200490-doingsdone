@@ -4,7 +4,7 @@ USE doingsdone;
 
 CREATE TABLE user (
   id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-  created_at DATE NOT NULL,
+  created_at DATETIME NOT NULL,
   email VARCHAR(255) NOT NULL,
   name VARCHAR(255) NOT NULL,
   password VARCHAR(255) NOT NULL,
@@ -23,8 +23,8 @@ CREATE TABLE project (
 
 CREATE TABLE task (
   id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-  created_at DATE NOT NULL,
-  completed_at DATE,
+  created_at DATETIME NOT NULL,
+  completed_at DATETIME,
   is_done BOOLEAN DEFAULT 0 NOT NULL,
   title VARCHAR(255) NOT NULL,
   file VARCHAR(255) UNIQUE,
