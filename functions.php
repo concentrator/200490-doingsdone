@@ -1,14 +1,10 @@
 <?php
 
-// показывать или нет выполненные задачи
-
-$show_complete_tasks = rand(0, 1);
-
 function tasksQty($tasks, $project) {
     $qty = 0;
 
     foreach ($tasks as $task) {
-        if ($task['project'] === $project) {
+        if ($task['project_id'] === $project) {
             $qty++;
         }
     }

@@ -6,7 +6,7 @@
             <?php foreach($projects as $project): ?>
             <li class="main-navigation__list-item">
                 <a class="main-navigation__list-item-link" href="index.php?proj_id=<?=$project['id']?>"><?=$project['title']?></a>
-                <span class="main-navigation__list-item-count"><?=tasksQty($tasks, $project['title']);?></span>
+                <span class="main-navigation__list-item-count"><?=tasksQty($tasks, $project['id']);?></span>
             </li>
             <?php endforeach; ?>
         </ul>
@@ -44,15 +44,15 @@
 
     <table class="tasks">
         <?php foreach ($tasks as $task): ?>
-            <?php if ($show_complete_tasks || !$task['done']):?>
-            <tr class="tasks__item task<?=($task['done']) ? ' task--completed' : ''?><?=(date_important($task['date'], 24 )) ? ' task--important' : ''?>">
+            <?php if ($show_complete_tasks || !$task['is_done']):?>
+            <tr class="tasks__item task<?=($task['is_done']) ? ' task--completed' : ''?><?=(date_important($task['deadline'], 24 )) ? ' task--important' : ''?>">
                 <td class="task__select">
                     <label class="checkbox task__checkbox">
                         <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="">
                         <span class="checkbox__text"><?=strip_tags($task['title']);?></span>
                     </label>
                 </td>
-                <td class="task__date"><?=$task['date'];?></td>
+                <td class="task__date"><?=$task['deadline'];?></td>
             </tr>
             <?php endif; ?>
         <?php endforeach ;?>
