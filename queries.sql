@@ -16,10 +16,10 @@ INSERT INTO task (created_at, title, deadline, user_id, project_id)
 
 SELECT * FROM project WHERE user_id = 1;
 
-SELECT * FROM task WHERE project_id = 4 AND user_id = 1;
+SELECT * FROM task WHERE project_id = 4;
 
 UPDATE task SET is_done = 1 WHERE id = 5;
 
-SELECT title, deadline FROM task WHERE user_id = 1 AND  0 < TIMESTAMPDIFF(MINUTE, now(), deadline) < 1440 AND TIMESTAMPDIFF(MINUTE, now(), deadline) > 0;
+SELECT title, deadline FROM task WHERE user_id = 1 AND DATE(deadline) = (CURDATE() + INTERVAL 1 DAY);
 
 UPDATE task SET title = 'Прослушать 5 лекцию' WHERE id = 2;
