@@ -5,8 +5,8 @@
         <ul class="main-navigation__list">
             <?php foreach($projects as $project): ?>
             <li class="main-navigation__list-item">
-                <a class="main-navigation__list-item-link" href="#"><?=$project?></a>
-                <span class="main-navigation__list-item-count"><?=tasksQty($tasks, $project);?></span>
+                <a class="main-navigation__list-item-link" href="index.php?proj_id=<?=$project['id']?>"><?=$project['title']?></a>
+                <span class="main-navigation__list-item-count"><?=tasksQty($tasks, $project['title']);?></span>
             </li>
             <?php endforeach; ?>
         </ul>

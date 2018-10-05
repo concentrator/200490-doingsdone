@@ -1,8 +1,26 @@
 <?php
 
-require_once("functions.php");
+require_once("init.php");
 
 require_once("data.php");
+
+$user_id = 1;
+
+if (!$link) {
+    $error = mysqli_connect_error();
+    $content = include_template('error.php', ['error' => $error]);
+} else {
+    $sql = "SELECT `id`, `title` FROM project WHERE user_id = $user_id";
+    $result = mysqli_query($link, $sql);
+
+    if ($result) {
+        $projects = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    } else {
+        $error = mysqli_error($link);
+        $content = include_template('error.php', ['error' => $error]);
+    }
+}
+
 
 $content = include_template("index.php",
         [
