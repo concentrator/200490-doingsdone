@@ -20,4 +20,5 @@ $show_complete_tasks = rand(0, 1);
 
 $projects = [];
 $content = '';
+$proj_id = '';
 
