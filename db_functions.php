@@ -1,5 +1,10 @@
 <?php
 
+function db_get_last_error($link) {
+
+    $error = mysqli_error($link);
+}
+
 function db_get_projects($link, $user_id) {
 
     $sql = "SELECT `id`, `title` FROM project WHERE user_id = $user_id";

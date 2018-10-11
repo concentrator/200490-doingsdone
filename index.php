@@ -8,10 +8,10 @@ if (!$link) {
     $content = include_template('error.php', ['error' => $error]);
 } else {
 
-    db_get_projects($link, $user_id);
+    $projects = db_get_projects($link, $user_id);
 
     if(!$projects) {
-        $error = mysqli_error($link);
+        $error = db_get_last_error($link);
         $content = include_template('error.php', ['error' => $error]);
     }
 
