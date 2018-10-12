@@ -1,16 +1,5 @@
 <?php
 
-function tasksQty($tasks, $project) {
-    $qty = 0;
-
-    foreach ($tasks as $task) {
-        if ($task['project_id'] === $project) {
-            $qty++;
-        }
-    }
-    return $qty;
-}
-
 function include_template($name, $data) {
     $name = 'templates/' . $name;
     $result = '';
@@ -28,7 +17,6 @@ function include_template($name, $data) {
     return $result;
 }
 
-
 function date_important($date, $hours) {
 
     $cur_time = strtotime('now');
@@ -40,5 +28,3 @@ function date_important($date, $hours) {
       return (($task_time - $cur_time) <= $seconds);
     }
 }
-
-?>
