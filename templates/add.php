@@ -42,10 +42,7 @@
     <div class="form__row">
       <label class="form__label" for="date">Дата выполнения</label>
 
-      <input class="form__input form__input--date<?=(isset($errors['name'])) ? ' form__input--error' : ''?>" type="date" name="date" id="date" value="" placeholder="Введите дату в формате ДД.ММ.ГГГГ">
-      <?php if(isset($errors['name'])):?>
-      <span class="form__message error-message"><?=$errors['name']?></span>
-      <?php endif;?>
+      <input class="form__input form__input--date" type="date" name="date" id="date" value="" placeholder="Введите дату в формате ДД.ММ.ГГГГ">
     </div>
 
     <div class="form__row">
