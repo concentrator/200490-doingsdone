@@ -10,6 +10,7 @@ if ($link) {
     $error = mysqli_connect_error();
     $content = include_template('error.php', ['error' => $error]);
     $page = include_template("layout.php", ['title' => $title, 'user' => $user, 'content' => $content]);
+    print($page);
     die();
 }
 

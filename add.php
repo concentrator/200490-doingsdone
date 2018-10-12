@@ -28,6 +28,21 @@ if ($projects === false) {
 
         if(isset($task['date'])) {
             $date = $task['date'];
+
+            if (preg_match("@^[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{4}$@", $date)) {
+                $dateArr = explode(".", $date);
+
+                if(!checkdate ($dateArr[1], $dateArr[0], $dateArr[2])) {
+                    $errors['date'] = 'Дата введена в неверном формате';
+                }
+
+            } else {
+                $errors['date'] = 'Дата введена в неверном формате';
+            }
+
+
+        } else {
+            $date = NULL;
         }
 
         if (isset($_FILES['preview']['name'])) {
@@ -52,6 +67,7 @@ if ($projects === false) {
             if($result = db_add_tasks($link, $user_id, $proj_id, $task_name, $date, $path)) {
                 header('location: /index.php');
                 die();
+
             } else {
                 $error = db_get_last_error($link);
                 $content = include_template('error.php', ['error' => $error]);
