@@ -48,3 +48,13 @@ function db_get_tasks_by_proj($link, $user_id, $proj_id) {
         return false;
     }
 }
+
+function db_add_tasks($link, $user_id, $proj_id, $task_name, $date, $file) {
+
+    $sql = "INSERT INTO task (created_at, title, deadline, user_id, project_id, file)
+            VALUES(CURTIME(), '$task_name', '$date', '$user_id', '$proj_id', '$file')";
+
+    $result = mysqli_query($link, $sql);
+
+    return $result;
+}
