@@ -15,7 +15,7 @@ if ($projects === false) {
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $task = $_POST;
 
-        $required = ['name', 'date'];
+        $required = ['name'];
         $dict = ['name' => 'Название', 'date' => 'Дата', 'preview' => 'Файл' ];
 
         $errors = [];
@@ -34,8 +34,8 @@ if ($projects === false) {
             $tmp_name = $_FILES['preview']['tmp_name'];
             $path = $_FILES['preview']['name'];
 
-        //     $finfo = finfo_open(FILEINFO_MIME_TYPE);
-        //     $file_type = finfo_file($finfo, $tmp_name);
+            // $finfo = finfo_open(FILEINFO_MIME_TYPE);
+            // $file_type = finfo_file($finfo, $tmp_name);
 
             move_uploaded_file($tmp_name, 'uploads/' . $path);
             // $task['path'] = $path;
@@ -49,10 +49,13 @@ if ($projects === false) {
             $proj_id = $task['project'];
             $task_name = $task['name'];
 
-            $result = db_add_tasks($link, $user_id, $proj_id, $task_name, $date, $path);
-
-            header('location: /index.php');
-            die();
+            if($result = db_add_tasks($link, $user_id, $proj_id, $task_name, $date, $path)) {
+                header('location: /index.php');
+                die();
+            } else {
+                $error = db_get_last_error($link);
+                $content = include_template('error.php', ['error' => $error]);
+            }
 
         }
 
