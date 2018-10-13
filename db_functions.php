@@ -22,7 +22,7 @@ function db_get_projects($link, $user_id) {
 
 function db_get_tasks($link, $user_id) {
 
-    $sql = "SELECT id, title, DATE(deadline) as deadline, is_done, project_id FROM task WHERE user_id = $user_id";
+    $sql = "SELECT id, title, DATE(deadline) as deadline, is_done, project_id, file FROM task WHERE user_id = $user_id";
     $result = mysqli_query($link, $sql);
 
     if ($result) {
@@ -35,7 +35,7 @@ function db_get_tasks($link, $user_id) {
 
 function db_get_tasks_by_proj($link, $user_id, $proj_id) {
 
-    $sql = "SELECT id, title, DATE(deadline) as deadline, is_done, project_id FROM task WHERE user_id = $user_id and project_id = $proj_id";
+    $sql = "SELECT id, title, DATE(deadline) as deadline, is_done, project_id, file FROM task WHERE user_id = $user_id and project_id = $proj_id";
 
     $result = mysqli_query($link, $sql);
 
@@ -49,10 +49,12 @@ function db_get_tasks_by_proj($link, $user_id, $proj_id) {
     }
 }
 
-function db_add_tasks($link, $user_id, $proj_id, $task_name, $date, $file) {
+function db_add_task($link, $user_id, $proj_id, $task_name, $date, $file) {
+
+    $task_name = mysqli_real_escape_string($link, $task_name);
 
     $sql = "INSERT INTO task (created_at, title, deadline, user_id, project_id, file)
-            VALUES(CURTIME(), '$task_name', '$date', '$user_id', '$proj_id', '$file')";
+            VALUES (CURTIME(), '$task_name', $date, $user_id, $proj_id, $file)";
 
     $result = mysqli_query($link, $sql);
 

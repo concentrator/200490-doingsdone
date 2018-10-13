@@ -2,23 +2,22 @@
 require_once ("functions.php");
 $db = require_once ("config/db.php");
 
+$title = "Дела в порядке";
+
+$user = "Константин";
+
+$user_id = 1;
+
 $link = mysqli_connect($db['host'], $db['user'], $db['password'], $db['database']);
 
 if ($link) {
     mysqli_set_charset($link, "utf8");
 } else {
     $error = mysqli_connect_error();
-    $content = include_template('error.php', ['error' => $error]);
-    $page = include_template("layout.php", ['title' => $title, 'user' => $user, 'content' => $content]);
-    print($page);
+    show_error($content, $error);
+    render_page($title, $user, $content);
     die();
 }
-
-$title = "Дела в порядке";
-
-$user = "Константин";
-
-$user_id = 1;
 
 // показывать или нет выполненные задачи
 

@@ -52,6 +52,9 @@
                         <span class="checkbox__text"><?=strip_tags($task['title']);?></span>
                     </label>
                 </td>
+                <?php if(isset($task['file'])):?>
+                <td class="task__file"><a class="download-link" href="/uploads/<?=$task['file'];?>"><?=$task['file'];?></a></td>
+                <?php endif; ?>
                 <td class="task__date"><?=$task['deadline'];?></td>
             </tr>
             <?php endif; ?>

@@ -22,7 +22,7 @@
     <div class="form__row">
       <label class="form__label" for="name">Название <sup>*</sup></label>
 
-      <input class="form__input<?=(isset($errors['name'])) ? ' form__input--error' : ''?>" type="text" name="name" id="name" value="" placeholder="Введите название">
+      <input class="form__input<?=(isset($errors['name'])) ? ' form__input--error' : ''?>" type="text" name="name" id="name" value="<?=(isset($dict['name'])) ? $dict['name'] : ''?>" placeholder="Введите название">
       <?php if(isset($errors['name'])):?>
       <span class="form__message error-message"><?=$errors['name']?></span>
       <?php endif;?>
@@ -34,15 +34,18 @@
 
       <select class="form__input form__input--select" name="project" id="project">
         <?php foreach($projects as $project): ?>
-        <option value="<?=$project['id']?>"><?=$project['title']?></option>
+        <option value="<?=$project['id']?>"<?=(isset($dict['project']) && intval($project['id'])===intval($dict['project'])) ? ' selected' : ''?>><?=$project['title']?></option>
         <?php endforeach; ?>
       </select>
+      <?php if(isset($errors['project'])):?>
+      <span class="form__message error-message"><?=$errors['project']?></span>
+      <?php endif;?>
     </div>
 
     <div class="form__row">
       <label class="form__label" for="date">Дата выполнения</label>
 
-      <input class="form__input form__input--date<?=(isset($errors['date'])) ? ' form__input--error' : ''?>" type="text" name="date" id="date" value="" placeholder="Введите дату в формате ДД.ММ.ГГГГ">
+      <input class="form__input form__input--date<?=(isset($errors['date'])) ? ' form__input--error' : ''?>" type="text" name="date" id="date" value="<?=(isset($dict['date'])) ? $dict['date'] : ''?>" placeholder="Введите дату в формате ДД.ММ.ГГГГ">
       <?php if(isset($errors['date'])):?>
       <span class="form__message error-message"><?=$errors['date']?></span>
       <?php endif;?>

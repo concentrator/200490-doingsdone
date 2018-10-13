@@ -9,14 +9,15 @@ $projects = db_get_projects($link, $user_id);
 
 if ($projects === false) {
     $error = db_get_last_error($link);
-    $content = include_template('error.php', ['error' => $error]);
+    show_error($content, $error);
 } else {
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $task = $_POST;
 
         $required = ['name'];
-        $dict = ['name' => 'Название', 'date' => 'Дата', 'preview' => 'Файл' ];
+
+        $dict = ['name' => '', 'project' => '', 'date' => '', 'preview' => ''];
 
         $errors = [];
 
@@ -26,51 +27,67 @@ if ($projects === false) {
             }
         }
 
-        if(isset($task['date'])) {
-            $date = $task['date'];
+        $proj_id = $task['project'];
+        $pid_exists = validate_project_id($projects, $proj_id);
 
-            if (preg_match("@^[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{4}$@", $date)) {
-                $dateArr = explode(".", $date);
-
-                if(!checkdate ($dateArr[1], $dateArr[0], $dateArr[2])) {
-                    $errors['date'] = 'Дата введена в неверном формате';
-                }
-
-            } else {
-                $errors['date'] = 'Дата введена в неверном формате';
-            }
-
-
-        } else {
-            $date = NULL;
+        if(!$pid_exists) {
+            $errors['project'] = 'Проект не существует';
         }
 
-        if (isset($_FILES['preview']['name'])) {
+        $date = $task['date'];
+
+        if(($date != '') && validate_date($date)) {
+
+            $mysqlDate = "'".date('Y-m-d', strtotime($date))."'";
+        } elseif(($date != '') && !validate_date($date)) {
+            $errors['date'] = 'Дата введена в неверном формате';
+        } else {
+            $mysqlDate = 'NULL';
+        }
+
+        if ($_FILES['preview']['size'] > 0) {
+
             $tmp_name = $_FILES['preview']['tmp_name'];
-            $path = $_FILES['preview']['name'];
+            $file = $_FILES['preview']['name'];
+            $ext = pathinfo($file, PATHINFO_EXTENSION);
+
+            if($ext) {
+                $file_uniq = uniqid().".".$ext;
+            } else {
+                $file_uniq = uniqid();
+            }
 
             // $finfo = finfo_open(FILEINFO_MIME_TYPE);
             // $file_type = finfo_file($finfo, $tmp_name);
 
-            move_uploaded_file($tmp_name, 'uploads/' . $path);
-            // $task['path'] = $path;
+            move_uploaded_file($tmp_name, 'uploads/' . $file_uniq);
+            $file_uniq = "'".$file_uniq."'";
+        } else {
+            $file_uniq = 'NULL';
         }
 
         if (count($errors)) {
+
+            foreach ($dict as $key => $value) {
+                if(isset($_POST[$key])) {
+                    $dict[$key] = $_POST[$key];
+                }
+            }
+
             $content = include_template('add.php',
                 ['projects' => $projects, 'errors' => $errors, 'dict' => $dict]);
+
         } else {
 
-            $proj_id = $task['project'];
             $task_name = $task['name'];
 
-            if($result = db_add_tasks($link, $user_id, $proj_id, $task_name, $date, $path)) {
+            if($result = db_add_task($link, $user_id, $proj_id, $task_name, $mysqlDate, $file_uniq)) {
                 header('location: /index.php');
                 die();
 
             } else {
                 $error = db_get_last_error($link);
-                $content = include_template('error.php', ['error' => $error]);
+                show_error($content, $error);
             }
 
         }
@@ -79,10 +96,7 @@ if ($projects === false) {
 
         $content = include_template("add.php", ['projects' => $projects]);
     }
+
 }
 
-
-
-$page = include_template("layout.php", ['title' => $title, 'user' => $user, 'content' => $content]);
-
-print($page);
+render_page($title, $user, $content);
