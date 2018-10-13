@@ -6,7 +6,7 @@
             <?php foreach($projects as $project): ?>
             <li class="main-navigation__list-item">
                 <a class="main-navigation__list-item-link" href="index.php?proj_id=<?=$project['id']?>"><?=$project['title']?></a>
-                <span class="main-navigation__list-item-count"><?=tasksQty($tasks, $project['id']);?></span>
+                <span class="main-navigation__list-item-count"><?=$project['task_count'];?></span>
             </li>
             <?php endforeach; ?>
         </ul>
@@ -52,6 +52,9 @@
                         <span class="checkbox__text"><?=strip_tags($task['title']);?></span>
                     </label>
                 </td>
+                <?php if(isset($task['file'])):?>
+                <td class="task__file"><a class="download-link" href="/uploads/<?=$task['file'];?>"><?=$task['file'];?></a></td>
+                <?php endif; ?>
                 <td class="task__date"><?=$task['deadline'];?></td>
             </tr>
             <?php endif; ?>

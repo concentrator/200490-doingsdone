@@ -5,64 +5,45 @@ require_once("db_functions.php");
 
 $error = false;
 
-if (!$link) {
-    $error = mysqli_connect_error();
-    $content = include_template('error.php', ['error' => $error]);
+$projects = db_get_projects($link, $user_id);
+
+if ($projects === false) {
+    $error = db_get_last_error($link);
+    show_error($content, $error);
 } else {
 
-    $projects = db_get_projects($link, $user_id);
-
-    if ($projects === false) {
-        $error = db_get_last_error($link);
-        $content = include_template('error.php', ['error' => $error]);
-    }
-
-    if (isset($_GET['proj_id']) && !$error) {
+    if (isset($_GET['proj_id'])) {
         $proj_id = $_GET['proj_id'];
+
+        $pid_exists = validate_project_id($projects, $proj_id);
+
+        if(!$pid_exists || !$proj_id) {
+            http_response_code(404);
+            show_error($content, 'Проект не найден');
+            render_page($title, $user, $content);
+            die();
+        }
 
         $tasks = db_get_tasks_by_proj($link, $user_id, $proj_id);
 
         if (($tasks !== false)) {
-
-            $content = include_template("index.php",
-            [
-                'show_complete_tasks' => $show_complete_tasks,
-                'projects' => $projects,
-                'tasks' => $tasks
-            ]);
-
+            show_tasks($content, $projects, $tasks, $show_complete_tasks);
         } else {
             $error = db_get_last_error($link);
-            $content = include_template('error.php', ['error' => $error]);
+            show_error($content, $error);
         }
 
-    } elseif (!$error) {
+    } else {
 
         $tasks = db_get_tasks($link, $user_id);
 
         if (($tasks !== false)) {
-
-            $content = include_template("index.php",
-            [
-                'show_complete_tasks' => $show_complete_tasks,
-                'projects' => $projects,
-                'tasks' => $tasks
-            ]);
-
+            show_tasks($content, $projects, $tasks, $show_complete_tasks);
         } else {
             $error = db_get_last_error($link);
-            $content = include_template('error.php', ['error' => $error]);
+            show_error($content, $error);
         }
-
     }
-
 }
 
-
-$page = include_template("layout.php", ['title' => $title, 'user' => $user, 'content' => $content]);
-
-
-print($page);
-
-?>
-
+render_page($title, $user, $content);
