@@ -13,8 +13,8 @@ function show_tasks(&$content, $projects, $tasks, $show_complete_tasks) {
                 ]);
 }
 
-function render_page($title, $user_name, $content) {
-    $page = include_template("layout.php", ['title' => $title, 'user_name' => $user_name, 'content' => $content]);
+function render_page($title, $user, $content) {
+    $page = include_template("layout.php", ['title' => $title, 'user' => $user, 'content' => $content]);
     print($page);
 }
 

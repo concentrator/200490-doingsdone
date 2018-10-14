@@ -20,6 +20,9 @@
             </a>
 
             <div class="main-header__side">
+            <?php if(!$user): ?>
+              <a class="main-header__side-item button button--transparent" href="auth.php">Войти</a>
+            <?php else: ?>
                 <a class="main-header__side-item button button--plus open-modal" href="add.php">Добавить задачу</a>
 
                 <div class="main-header__side-item user-menu">
@@ -28,11 +31,12 @@
                     </div>
 
                     <div class="user-menu__data">
-                        <p><?=$user_name;?></p>
+                        <p><?=$user['name'];?></p>
 
                         <a href="#">Выйти</a>
                     </div>
                 </div>
+            <?php endif; ?>
             </div>
         </header>
 

@@ -44,9 +44,9 @@ function db_get_tasks_by_proj($link, $user_id, $proj_id) {
         $tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
         return $tasks;
 
-    } else {
-        return false;
     }
+
+    return false;
 }
 
 function db_add_task($link, $user_id, $proj_id, $task_name, $date, $file) {
@@ -75,7 +75,7 @@ function db_check_email($link, $email) {
 function db_register_user($link, $email, $password, $user_name) {
 
     $user_name = mysqli_real_escape_string($link, $user_name);
-    $user_name = mysqli_real_escape_string($link, $user_name);
+    $email = mysqli_real_escape_string($link, $email);
 
     $sql = "INSERT INTO user (created_at, email, name, password)
             VALUES (NOW(), '$email', '$user_name', '$password')";
@@ -84,3 +84,21 @@ function db_register_user($link, $email, $password, $user_name) {
 
     return $result;
 }
+
+function db_check_user($link, $email) {
+
+    $email = mysqli_real_escape_string($link, $email);
+
+    $sql = "SELECT * FROM user WHERE email = '$email'";
+
+    $result = mysqli_query($link, $sql);
+
+    if(mysqli_num_rows($result) > 0) {
+        $user = mysqli_fetch_assoc($result);
+        return $user;
+    }
+
+    return false;
+}
+
+
