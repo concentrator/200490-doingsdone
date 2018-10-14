@@ -1,4 +1,7 @@
 <?php
+error_reporting (E_ALL);
+ini_set ('display_errors', 1);
+
 require_once ("functions.php");
 $db = require_once ("config/db.php");
 
@@ -6,13 +9,13 @@ $title = "Дела в порядке";
 
 session_start();
 
-if(!$_SESSION['user']) {
+if(!isset($_SESSION['user'])) {
     $user = null;
 } else {
     $user = $_SESSION['user'];
 }
 
-$user_id = 1;
+$user_id = $user['id'];
 
 $link = mysqli_connect($db['host'], $db['user'], $db['password'], $db['database']);
 

@@ -3,6 +3,11 @@
 require_once("init.php");
 require_once("db_functions.php");
 
+if(!isset($_SESSION['user'])) {
+    header('location: /guest.php');
+    die();
+}
+
 $error = false;
 
 $projects = db_get_projects($link, $user_id);
