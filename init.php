@@ -14,11 +14,9 @@ session_start();
 
 if(!isset($_SESSION['user'])) {
     $user = null;
-    $is_logged = 0;
 } else {
     $user = $_SESSION['user'];
     $user_id = $user['id'];
-     $is_logged = 1;
 }
 
 $link = mysqli_connect($db['host'], $db['user'], $db['password'], $db['database']);

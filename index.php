@@ -2,10 +2,10 @@
 
 require_once("init.php");
 
-if(!$is_logged) {
+if($user === null) {
+    $is_guest = true;
     $content = include_template("guest.php", ['tpl_data' => $tpl_data]);
-    $page = include_template("layout.php", ['title' => $title, 'content' => $content]);
-    print $page;
+    render_page($title, $user, $content);
     die();
 }
 
