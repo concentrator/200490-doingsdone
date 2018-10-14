@@ -46,4 +46,4 @@ if ($projects === false) {
     }
 }
 
-render_page($title, $user, $content);
+render_page($title, $user_name, $content);

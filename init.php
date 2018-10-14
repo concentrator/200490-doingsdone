@@ -6,6 +6,8 @@ $title = "Дела в порядке";
 
 $user = "Константин";
 
+$user_name = "Константин";
+
 $user_id = 1;
 
 $link = mysqli_connect($db['host'], $db['user'], $db['password'], $db['database']);
@@ -15,7 +17,7 @@ if ($link) {
 } else {
     $error = mysqli_connect_error();
     show_error($content, $error);
-    render_page($title, $user, $content);
+    render_page($title, $user_name, $content);
     die();
 }
 
