@@ -54,7 +54,7 @@ function db_add_task($link, $user_id, $proj_id, $task_name, $date, $file) {
     $task_name = mysqli_real_escape_string($link, $task_name);
 
     $sql = "INSERT INTO task (created_at, title, deadline, user_id, project_id, file)
-            VALUES (CURTIME(), '$task_name', $date, $user_id, $proj_id, $file)";
+            VALUES (NOW(), '$task_name', $date, $user_id, $proj_id, $file)";
 
     $result = mysqli_query($link, $sql);
 
@@ -77,7 +77,7 @@ function db_register_user($link, $email, $password, $user_name) {
     $user_name = mysqli_real_escape_string($link, $user_name);
 
     $sql = "INSERT INTO user (created_at, email, name, password)
-            VALUES (CURTIME(), '$email', '$user_name', '$password')";
+            VALUES (NOW(), '$email', '$user_name', '$password')";
 
     $result = mysqli_query($link, $sql);
 
