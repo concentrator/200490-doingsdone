@@ -54,7 +54,31 @@ function db_add_task($link, $user_id, $proj_id, $task_name, $date, $file) {
     $task_name = mysqli_real_escape_string($link, $task_name);
 
     $sql = "INSERT INTO task (created_at, title, deadline, user_id, project_id, file)
-            VALUES (CURTIME(), '$task_name', $date, $user_id, $proj_id, $file)";
+            VALUES (NOW(), '$task_name', $date, $user_id, $proj_id, $file)";
+
+    $result = mysqli_query($link, $sql);
+
+    return $result;
+}
+
+function db_check_email($link, $email) {
+
+    $email = mysqli_real_escape_string($link, $email);
+
+    $sql = "SELECT email FROM user WHERE email = '$email'";
+
+    $result = mysqli_query($link, $sql);
+
+    return mysqli_num_rows($result);
+}
+
+function db_register_user($link, $email, $password, $user_name) {
+
+    $user_name = mysqli_real_escape_string($link, $user_name);
+    $user_name = mysqli_real_escape_string($link, $user_name);
+
+    $sql = "INSERT INTO user (created_at, email, name, password)
+            VALUES (NOW(), '$email', '$user_name', '$password')";
 
     $result = mysqli_query($link, $sql);
 
