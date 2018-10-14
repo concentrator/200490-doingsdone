@@ -1,12 +1,13 @@
 <?php
 
 require_once("init.php");
-require_once("db_functions.php");
 
-// if(!isset($_SESSION['user'])) {
-//     header('location: /guest.php');
-//     die();
-// }
+if(!$is_logged) {
+    $content = include_template("guest.php", ['tpl_data' => $tpl_data]);
+    $page = include_template("layout.php", ['title' => $title, 'content' => $content]);
+    print $page;
+    die();
+}
 
 $error = false;
 
