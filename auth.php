@@ -26,13 +26,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if(!db_check_user($link, $email)) {
             $errors['email'] = 'E-mail не зарегистрирован';
         } else {
-            $user = db_check_user($link, $email);
+            $user_check = db_check_user($link, $email);
         }
     }
 
-    if (!count($errors) and $user) {
-        if (password_verify($user_auth['password'], $user['password'])) {
-            $_SESSION['user'] = $user;
+    if (!count($errors) and $user_check) {
+        if (password_verify($user_auth['password'], $user_check['password'])) {
+            $_SESSION['user'] = $user_check;
         } else {
             $errors['password'] = 'Неверный пароль';
         }
