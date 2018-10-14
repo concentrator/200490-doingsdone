@@ -75,6 +75,7 @@ function db_check_email($link, $email) {
 function db_register_user($link, $email, $password, $user_name) {
 
     $user_name = mysqli_real_escape_string($link, $user_name);
+    $user_name = mysqli_real_escape_string($link, $user_name);
 
     $sql = "INSERT INTO user (created_at, email, name, password)
             VALUES (NOW(), '$email', '$user_name', '$password')";
