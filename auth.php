@@ -51,9 +51,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     } else {
 
-        var_dump($user);
-        // header('location: /index.php');
-        // die();
+        header('location: /index.php');
+        die();
     }
 
 } else {
