@@ -1,14 +1,23 @@
 <?php
+error_reporting (E_ALL);
+ini_set ('display_errors', 1);
+
 require_once ("functions.php");
+require_once("db_functions.php");
 $db = require_once ("config/db.php");
 
 $title = "Дела в порядке";
 
-$user = "Константин";
+$tpl_data = '';
 
-$user_name = "Константин";
+session_start();
 
-$user_id = 1;
+if(!isset($_SESSION['user'])) {
+    $user = null;
+} else {
+    $user = $_SESSION['user'];
+    $user_id = $user['id'];
+}
 
 $link = mysqli_connect($db['host'], $db['user'], $db['password'], $db['database']);
 
@@ -17,7 +26,7 @@ if ($link) {
 } else {
     $error = mysqli_connect_error();
     show_error($content, $error);
-    render_page($title, $user_name, $content);
+    render_page($title, $user['name'], $content);
     die();
 }
 

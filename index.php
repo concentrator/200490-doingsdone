@@ -1,7 +1,13 @@
 <?php
 
 require_once("init.php");
-require_once("db_functions.php");
+
+if($user === null) {
+    $is_guest = true;
+    $content = include_template("guest.php", ['tpl_data' => $tpl_data]);
+    render_page($title, $user, $content);
+    die();
+}
 
 $error = false;
 
@@ -46,4 +52,4 @@ if ($projects === false) {
     }
 }
 
-render_page($title, $user_name, $content);
+render_page($title, $user, $content);

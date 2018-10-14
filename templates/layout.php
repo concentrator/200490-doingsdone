@@ -9,17 +9,20 @@
     <link rel="stylesheet" href="css/flatpickr.min.css">
 </head>
 
-<body>
+<body class="<?=($user === null) ? 'body-background' : ''?>">
 <h1 class="visually-hidden">Дела в порядке</h1>
 
 <div class="page-wrapper">
-    <div class="container container--with-sidebar">
+    <div class="container<?=($user !== null) ? ' container--with-sidebar' : ''?>">
         <header class="main-header">
             <a href="/">
                 <img src="img/logo.png" width="153" height="42" alt="Логотип Дела в порядке">
             </a>
 
             <div class="main-header__side">
+            <?php if($user === null) : ?>
+              <a class="main-header__side-item button button--transparent" href="auth.php">Войти</a>
+            <?php else: ?>
                 <a class="main-header__side-item button button--plus open-modal" href="add.php">Добавить задачу</a>
 
                 <div class="main-header__side-item user-menu">
@@ -28,11 +31,12 @@
                     </div>
 
                     <div class="user-menu__data">
-                        <p><?=$user_name;?></p>
+                        <p><?=$user['name'];?></p>
 
-                        <a href="#">Выйти</a>
+                        <a href="logout.php">Выйти</a>
                     </div>
                 </div>
+            <?php endif; ?>
             </div>
         </header>
 
