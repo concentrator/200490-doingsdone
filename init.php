@@ -4,6 +4,14 @@ $db = require_once ("config/db.php");
 
 $title = "Дела в порядке";
 
+session_start();
+
+if(!$_SESSION['user']) {
+    $user = null;
+} else {
+    $user = $_SESSION['user'];
+}
+
 $user_id = 1;
 
 $link = mysqli_connect($db['host'], $db['user'], $db['password'], $db['database']);

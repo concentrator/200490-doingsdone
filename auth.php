@@ -5,11 +5,7 @@ require_once("db_functions.php");
 
 $errors = [];
 
-$user = [];
-
 $dict = ['email' => ''];
-
-session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -55,9 +51,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     } else {
 
-        // var_dump($user);
-        header('location: /index.php');
-        die();
+        var_dump($user);
+        // header('location: /index.php');
+        // die();
     }
 
 } else {
