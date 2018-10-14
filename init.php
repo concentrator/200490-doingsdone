@@ -13,9 +13,8 @@ if(!isset($_SESSION['user'])) {
     $user = null;
 } else {
     $user = $_SESSION['user'];
+    $user_id = $user['id'];
 }
-
-$user_id = $user['id'];
 
 $link = mysqli_connect($db['host'], $db['user'], $db['password'], $db['database']);
 
