@@ -131,15 +131,13 @@ function db_task_done($link, $task_id, $is_done) {
 function db_get_tasks_by_date($link, $user_id, $date) {
 
     if($date===1) {
-        $deadline = ' = CURDATE()';
-    }
-
-    if($date===2) {
-        $deadline = ' = (CURDATE() + INTERVAL 1 DAY)';
-    }
-
-    if($date===0) {
-        $deadline = ' < CURDATE()';
+        $deadline = '= CURDATE()';
+    } elseif($date===2) {
+        $deadline = '= (CURDATE() + INTERVAL 1 DAY)';
+    } elseif($date===0) {
+        $deadline = '< CURDATE()';
+    } else {
+        return false;
     }
 
     $sql = "SELECT id, title, DATE(deadline) as deadline, is_done, project_id, file FROM task WHERE user_id = $user_id AND deadline $deadline";

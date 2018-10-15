@@ -9,7 +9,7 @@ $dict = ['email' => '', 'name' => ''];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    $user = $_POST;
+    $user_reg = $_POST;
 
     $required = ['email', 'password','name'];
 
@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     if(!isset($errors['email'])) {
-        $email = $user['email'];
+        $email = $user_reg['email'];
 
         if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $errors['email'] = 'E-mail введён некорректно';
@@ -45,8 +45,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     } else {
 
-        $user_name = $user['name'];
-        $password = password_hash($user['password'], PASSWORD_DEFAULT);
+        $user_name = $user_reg['name'];
+        $password = password_hash($user_reg['password'], PASSWORD_DEFAULT);
 
         if($result = db_register_user($link, $email, $password, $user_name)) {
             header('location: /index.php');
