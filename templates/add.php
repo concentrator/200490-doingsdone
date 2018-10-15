@@ -12,7 +12,7 @@
     </ul>
   </nav>
 
-  <a class="button button--transparent button--plus content__side-button" href="form-project.html">Добавить проект</a>
+  <a class="button button--transparent button--plus content__side-button" href="add_project.php">Добавить проект</a>
 </section>
 
 <main class="content__main">
@@ -30,7 +30,7 @@
     </div>
 
     <div class="form__row">
-      <label class="form__label" for="project">Проект <sup>*</sup></label>
+      <label class="form__label" for="project">Проект</label>
 
       <select class="form__input form__input--select" name="project" id="project">
         <?php foreach($projects as $project): ?>

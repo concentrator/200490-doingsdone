@@ -13,7 +13,7 @@
     </nav>
 
     <a class="button button--transparent button--plus content__side-button"
-       href="pages/form-project.html" target="project_add">Добавить проект</a>
+       href="add_project.php">Добавить проект</a>
 </section>
 
 <main class="content__main">
@@ -28,9 +28,9 @@
     <div class="tasks-controls">
         <nav class="tasks-switch">
             <a href="/" class="tasks-switch__item tasks-switch__item--active">Все задачи</a>
-            <a href="/" class="tasks-switch__item">Повестка дня</a>
-            <a href="/" class="tasks-switch__item">Завтра</a>
-            <a href="/" class="tasks-switch__item">Просроченные</a>
+            <a href="/index.php?date=1" class="tasks-switch__item">Повестка дня</a>
+            <a href="/index.php?date=2" class="tasks-switch__item">Завтра</a>
+            <a href="/index.php?date=0" class="tasks-switch__item">Просроченные</a>
         </nav>
 
         <label class="checkbox">
@@ -48,13 +48,15 @@
             <tr class="tasks__item task<?=($task['is_done']) ? ' task--completed' : ''?><?=(date_important($task['deadline'], 24 )) ? ' task--important' : ''?>">
                 <td class="task__select">
                     <label class="checkbox task__checkbox">
-                        <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="">
+                        <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="<?=$task['id'];?>" <?=($task['is_done']) ? ' checked' : ''?>>
                         <span class="checkbox__text"><?=strip_tags($task['title']);?></span>
                     </label>
                 </td>
+                <td class="task__file">
                 <?php if(isset($task['file'])):?>
-                <td class="task__file"><a class="download-link" href="/uploads/<?=$task['file'];?>"><?=$task['file'];?></a></td>
+                <a class="download-link" href="/uploads/<?=$task['file'];?>"><?=$task['file'];?></a>
                 <?php endif; ?>
+                </td>
                 <td class="task__date"><?=$task['deadline'];?></td>
             </tr>
             <?php endif; ?>

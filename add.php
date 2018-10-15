@@ -1,7 +1,11 @@
 <?php
 
 require_once("init.php");
-require_once("db_functions.php");
+
+if($user === null) {
+    header('location: /auth.php');
+    die();
+}
 
 $error = false;
 
@@ -27,11 +31,15 @@ if ($projects === false) {
             }
         }
 
-        $proj_id = $task['project'];
-        $pid_exists = validate_project_id($projects, $proj_id);
+        $proj_id = 'NULL';
 
-        if(!$pid_exists) {
-            $errors['project'] = 'Проект не существует';
+        if(isset($task['project'])) {
+            $proj_id = $task['project'];
+            $pid_exists = validate_project_id($projects, $proj_id);
+
+            if(!$pid_exists) {
+                $errors['project'] = 'Проект не существует';
+            }
         }
 
         $date = $task['date'];
