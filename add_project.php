@@ -29,6 +29,12 @@ if ($projects === false) {
             }
         }
 
+        $ptitle_exists = validate_project_title($projects, $project['name']);
+
+        if($ptitle_exists) {
+            $errors['name'] = "Проект с таким именем уже есть";
+        }
+
         if (count($errors)) {
 
             $content = include_template('add_project.php',
@@ -39,8 +45,8 @@ if ($projects === false) {
             $project_name = $project['name'];
 
             if($result = db_add_project($link, $user_id, $project_name)) {
-                header('location: /index.php');
-                die();
+            header('location: /index.php');
+            die();
 
             } else {
                 $error = db_get_last_error($link);

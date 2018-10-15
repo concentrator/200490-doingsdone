@@ -19,7 +19,7 @@ if ($projects === false) {
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $task = $_POST;
 
-        $required = ['name'];
+        $required = ['name', 'project'];
 
         $dict = ['name' => '', 'project' => '', 'date' => '', 'preview' => ''];
 
@@ -64,9 +64,6 @@ if ($projects === false) {
             } else {
                 $file_uniq = uniqid();
             }
-
-            // $finfo = finfo_open(FILEINFO_MIME_TYPE);
-            // $file_type = finfo_file($finfo, $tmp_name);
 
             move_uploaded_file($tmp_name, 'uploads/' . $file_uniq);
             $file_uniq = "'".$file_uniq."'";

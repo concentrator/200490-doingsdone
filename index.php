@@ -27,8 +27,6 @@ if ($projects === false) {
             header('location: /index.php');
             die();
         }
-
-        // $query = http_build_query($show_complete_tasks, '', '&amp;');
     }
 
     if (isset($_GET['date'])) {
