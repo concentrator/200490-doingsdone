@@ -7,7 +7,7 @@ CREATE TABLE user (
   created_at DATETIME NOT NULL,
   email VARCHAR(255) NOT NULL,
   name VARCHAR(255) NOT NULL,
-  password VARCHAR(255) NOT NULL,
+  password VARCHAR(60) NOT NULL,
   contact TEXT,
   UNIQUE KEY index_email (email)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;

@@ -63,5 +63,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 render_page($title, $user, $content);
-
-
