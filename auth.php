@@ -8,6 +8,8 @@ $dict = ['email' => ''];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
+    $user_check = false;
+
     $user_auth = $_POST;
 
     $required = ['email','password'];

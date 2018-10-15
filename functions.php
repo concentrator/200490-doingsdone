@@ -33,6 +33,22 @@ function validate_project_id($projects, $proj_id) {
     return $pid_exists;
 }
 
+function validate_project_title($projects, $proj_title) {
+
+    $ptitle_exists = false;
+
+    $proj_title = mb_strtolower($proj_title);
+
+    foreach ($projects as $project) {
+
+        if ($proj_title === mb_strtolower($project['title'])) {
+            $ptitle_exists = true;
+            break;
+        }
+    }
+    return $ptitle_exists;
+}
+
 function validate_date($date) {
     $date_valid = false;
 

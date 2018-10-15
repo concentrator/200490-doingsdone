@@ -30,10 +30,7 @@ if ($link) {
     die();
 }
 
-// показывать или нет выполненные задачи
-
-$show_complete_tasks = rand(0, 1);
-
+$show_complete_tasks = 1;
 $projects = [];
 $content = '';
 $proj_id = '';
