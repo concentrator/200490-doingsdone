@@ -53,22 +53,22 @@ if ($projects === false) {
             $mysqlDate = 'NULL';
         }
 
+        $file_uniq = 'NULL';
+
         if ($_FILES['preview']['size'] > 0) {
 
             $tmp_name = $_FILES['preview']['tmp_name'];
             $file = $_FILES['preview']['name'];
             $ext = pathinfo($file, PATHINFO_EXTENSION);
 
+            $file_uniq = uniqid();
+
             if($ext) {
                 $file_uniq = uniqid().".".$ext;
-            } else {
-                $file_uniq = uniqid();
             }
 
             move_uploaded_file($tmp_name, 'uploads/' . $file_uniq);
             $file_uniq = "'".$file_uniq."'";
-        } else {
-            $file_uniq = 'NULL';
         }
 
         if (count($errors)) {
@@ -94,7 +94,6 @@ if ($projects === false) {
                 $error = db_get_last_error($link);
                 show_error($content, $error);
             }
-
         }
 
     } else {
